@@ -28,5 +28,6 @@ int main(void)
 {
   run_analysis();
   system("pause");
+  printf("howdy");
   return 0;
 }

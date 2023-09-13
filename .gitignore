@@ -1,2 +1,5 @@
 /.vscode/
 /.DS_Store
+/result.txt
+/main_executable.dSYM/
+/main_executable

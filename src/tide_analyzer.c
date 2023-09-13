@@ -132,6 +132,18 @@ void run_analysis()
 
                                             /* Writes the result to the file */
                                             /* DO NOT MODIFY THIS LINE */
+
+  file_pointer = fopen(RESULT_FILE_NAME, "w");
+  if (file_pointer == NULL) {
+    printf("Error: Failed to open the result file.\n");
+    return;
+  }
+
+
+
+  // Don't forget to close the file pointer afterward
+  fclose(file_pointer);
+
   fprintf(file_pointer, "Puddlejump tidal frequency: %f per day\n", frequency);
 
                                             /* Closes the result file */
