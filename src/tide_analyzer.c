@@ -66,7 +66,6 @@ void run_analysis()
   double omega[NUMBER_OF_READINGS]; /* Tidal frequencies */
   double frequency = 0.0;                /* Tides occur with this frequency the most... */
   double amplitude = 0.0;                /* ...and that frequency occured this many times */
-  int i = 0;                  /* Helpful iterator variable */
   FILE* file_pointer = NULL;               /* A "pointer" to a file */
 
                                             /* Starts by initializing the elements in the tidal frequency array so that each omega[i] equals
@@ -133,23 +132,38 @@ void run_analysis()
                                             /* Writes the result to the file */
                                             /* DO NOT MODIFY THIS LINE */
 
-  file_pointer = fopen(RESULT_FILE_NAME, "w");
-  if (file_pointer == NULL) {
-    printf("Error: Failed to open the result file.\n");
-    return;
+
+  for(int j = 0; j<NUMBER_OF_READINGS; j++){
+    omega[j] = (double)j*SAMPLING_FREQUENCY / NUMBER_OF_READINGS;
   }
 
+  file_pointer = fopen("puddlejump.txt", "r");
+  process_file(readings, file_pointer);
+  if(file_pointer != NULL){
+    fclose(file_pointer);
+  }
 
+  fft(1, 17, readings, complex_component);
 
-  // Don't forget to close the file pointer afterward
-  fclose(file_pointer);
+  for(int j = 0; j < NUMBER_OF_READINGS; j++){
+    readings[j] = sqrt(readings[j]*readings[j] + complex_component[j]*complex_component[j]);
+  }
 
+  for(int j = 0; j<NUMBER_OF_READINGS/2; j++){
+    if(omega[j]>NOISE_FILTER && readings[j]>amplitude){
+      amplitude=readings[j];
+      frequency=omega[j];
+    }
+  }
+
+  file_pointer=fopen("result.txt","w");
   fprintf(file_pointer, "Puddlejump tidal frequency: %f per day\n", frequency);
 
                                             /* Closes the result file */
-                                            // if (file_pointer ...
+                                            // if (file_pointer ... 
 
                                             /* And that's it */
+  fclose(file_pointer);
   printf("Analysis complete, result.txt created\n");
 }
 
@@ -168,11 +182,10 @@ void run_analysis()
 void process_file(double array_to_populate[], FILE* pointer_to_data_file)
 {
   /* Variable list */
-  char  line_buffer[LINESIZE];
+  char line_buffer[LINESIZE];
   int extracted_values[MAX_VALUES_PER_LINE];
   int readings_processed = 0;
   int values_per_line = 0;
-  int i = 0;
 
   /* Copies the file, line by line, to line buffer using fgets in a while loop */
   // while( fgets (... ) ) {
@@ -193,7 +206,15 @@ void process_file(double array_to_populate[], FILE* pointer_to_data_file)
   by the number of values successfully extracted from the line in the file. */
   // readings_processed +=
 
+  while (fgets(line_buffer, LINESIZE, pointer_to_data_file) != NULL){ //load line buffer
+    int values[  MAX_VALUES_PER_LINE ];
+    values_per_line = sscanf(line_buffer, "%d %d %d %d %d %d", &values[0], &values[1], &values[2], &values[3], &values[4], &values[5]);
+    
+    for (int i = 0; i<values_per_line; i++){
+      array_to_populate[readings_processed]=values[i];
+      readings_processed+=1;
+    }
+  }
 
-  /* End of function */
   return;
 }
