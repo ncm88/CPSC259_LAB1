@@ -108,7 +108,7 @@ void run_analysis()
                                             Searches through the results for the tidal frequency with the greatest amplitude.
                                             We needn't examine every value stored in the transformed readings array.  It is enough
                                             to look through the first NUMBER_OF_READINGS / 2.  Why?  The discrete Fourier transform
-                                            does not accurately represent the Fourier coefficients for values of omega large than
+                                            does not accurately represent the Fourier coefficients for values of omega larger than
                                             NUMBER_OF_READINGS / 2 (it actually gives you the same as the first half, but in reverse
                                             order), and that is why they shouldn't be considered.
 
@@ -156,14 +156,19 @@ void run_analysis()
     }
   }
 
+
   file_pointer=fopen("result.txt","w");
-  fprintf(file_pointer, "Puddlejump tidal frequency: %f per day\n", frequency);
+  fprintf(file_pointer, "Puddlejump tidal frequency: %f per day\n Puddlejump tidal amplitude: %f \n", frequency, amplitude);
+  
 
                                             /* Closes the result file */
                                             // if (file_pointer ... 
 
                                             /* And that's it */
-  fclose(file_pointer);
+  if (file_pointer!=NULL){
+    fclose(file_pointer);
+  }
+
   printf("Analysis complete, result.txt created\n");
 }
 
