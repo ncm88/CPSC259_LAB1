@@ -7,10 +7,10 @@ The tide measurement file is a txt file whose name
 corresponds to the name defined in the preprocessor
 directive.  It is a series of NUMBER_OF_READINGS tidal
 readings (in mm) taken twice per hour.
-Author:			  Your names
-Student #s:		12345678 and 12345678
-CS Accounts:	a1a1 and b2b2
-Date:				  Add the date here
+Author:			  Nolan McCleary
+Student #s:		33634312
+CS Accounts:	ncm88
+Date:				  Sep 20, 2023
 */
 
 /******************************************************************

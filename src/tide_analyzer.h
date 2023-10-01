@@ -1,10 +1,10 @@
 /*
 File:         tide_analyzer.h
 Purpose:      Contains prototypes
-Author:			  Your names
-Student #s:		12345678 and 12345678
-CS Accounts:  a1a1 and b2b2
-Date:				  Add the date here
+Author:			  Nolan McCleary
+Student #s:		33634312
+CS Accounts:  ncm88
+Date:		    Sepm 20, 2023
 */
 
 /********************************************************************
